@@ -40,3 +40,38 @@ TEST(PiezasTest, resetBoard) {
         }
     }
 }
+
+TEST(PiezasTest, dropPieceExpectedTurn) {
+    Piezas newGame;
+
+    ASSERT_EQ(newGame.dropPiece(0), O);
+    ASSERT_EQ(newGame.dropPiece(2), X);
+    ASSERT_EQ(newGame.dropPiece(2), O);
+    ASSERT_EQ(newGame.dropPiece(3), X);
+}
+
+TEST(PiezasTest, dropPieceInvalidColumn) {
+    Piezas newGame;
+
+    ASSERT_EQ(newGame.dropPiece(4), Invalid);
+    ASSERT_EQ(newGame.dropPiece(5), Invalid);
+    ASSERT_EQ(newGame.dropPiece(-1), Invalid);
+    ASSERT_EQ(newGame.dropPiece(100), Invalid);
+}
+
+TEST(PiezasTest, dropPieceFullColumn) {
+    Piezas newGame;
+
+    newGame.dropPiece(0);
+    newGame.dropPiece(0);
+    newGame.dropPiece(0);
+    ASSERT_EQ(newGame.dropPiece(0), Blank);
+    newGame.dropPiece(1);
+    newGame.dropPiece(1);
+    newGame.dropPiece(1);
+    ASSERT_EQ(newGame.dropPiece(1), Blank);
+    newGame.dropPiece(2);
+    newGame.dropPiece(2);
+    newGame.dropPiece(2);
+    ASSERT_EQ(newGame.dropPiece(2), Blank);
+}
