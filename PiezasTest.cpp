@@ -14,7 +14,19 @@ class PiezasTest : public ::testing::Test {
     virtual void TearDown() {}  //clean up after each test, (before destructor)
 };
 
-TEST(PiezasTest, pieceAt_out_of_range) {
+TEST(PiezasTest, pieceAtOutOfRange) {
     Piezas newGame;
-    ASSERT_EQ(newGame.pieceAt(2, 6), Invalid);
+
+    // Testing multiple out of range possibilties. All should return Invalid
+    ASSERT_EQ(newGame.pieceAt(2, 4), Invalid);
+    ASSERT_EQ(newGame.pieceAt(3, 2), Invalid);
+    ASSERT_EQ(newGame.pieceAt(-1, 2), Invalid);
+}
+
+TEST(PiezasTest, pieceAtReturnValue) {
+    Piezas newGame;
+
+    ASSERT_EQ(newGame.pieceAt(2, 3), Blank);
+    ASSERT_EQ(newGame.pieceAt(0, 0), Blank);
+    ASSERT_EQ(newGame.pieceAt(0, 3), Blank);
 }
