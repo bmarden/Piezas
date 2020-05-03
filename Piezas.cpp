@@ -22,7 +22,7 @@
  * specifies it is X's turn first
 **/
 Piezas::Piezas() {
-    board.resize(4, std::vector<Piece>(3, Blank));
+    board.resize(BOARD_ROWS, std::vector<Piece>(BOARD_COLS, Blank));
 }
 
 /**
@@ -50,8 +50,8 @@ Piece Piezas::dropPiece(int column) {
 **/
 Piece Piezas::pieceAt(int row, int column) {
     try {
-        return board[row].at(column);
-    } catch (std::out_of_range error) {
+        return board.at(row).at(column);
+    } catch (const std::out_of_range& error) {
         return Invalid;
     }
     return Blank;
