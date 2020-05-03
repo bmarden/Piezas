@@ -30,3 +30,13 @@ TEST(PiezasTest, pieceAtReturnValue) {
     ASSERT_EQ(newGame.pieceAt(0, 0), Blank);
     ASSERT_EQ(newGame.pieceAt(0, 3), Blank);
 }
+
+TEST(PiezasTest, resetBoard) {
+    Piezas newGame;
+    newGame.reset();
+    for (size_t i = 0; i < BOARD_ROWS; i++) {
+        for (size_t j = 0; j < BOARD_COLS; j++) {
+            ASSERT_EQ(newGame.pieceAt(i, j), Blank);
+        }
+    }
+}
