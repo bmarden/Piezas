@@ -23,6 +23,7 @@
 **/
 Piezas::Piezas() {
     board.resize(BOARD_ROWS, std::vector<Piece>(BOARD_COLS, Blank));
+    turn = X;
 }
 
 /**
@@ -46,6 +47,17 @@ void Piezas::reset() {
  * Trying to drop a piece where it cannot be placed loses the player's turn
 **/
 Piece Piezas::dropPiece(int column) {
+    try {
+        for (auto row = board.begin(); row != board.end(); row++) {
+            if (row->at(column) == Blank) {
+                row->at(column) = turn;
+                turn == X ? turn = O : turn = X;
+                return turn;
+            }
+        }
+    } catch (const std::out_of_range& error) {
+        return Invalid;
+    }
     return Blank;
 }
 
