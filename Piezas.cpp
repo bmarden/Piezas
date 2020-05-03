@@ -30,6 +30,11 @@ Piezas::Piezas() {
  * same size as previously specified
 **/
 void Piezas::reset() {
+    for (auto row = board.begin(); row != board.end(); row++) {
+        for (auto col = row->begin(); col != row->end(); col++) {
+            *col = Blank;
+        }
+    }
 }
 
 /**
