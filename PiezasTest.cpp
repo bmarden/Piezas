@@ -111,3 +111,26 @@ TEST(PiezasTest, dropPieceFullCol2) {
     newGame.dropPiece(2);
     ASSERT_EQ(newGame.dropPiece(2), Blank);
 }
+
+TEST(PiezasTest, gameStateGameIncomplete) {
+    Piezas newGame;
+    ASSERT_EQ(newGame.gameState(), Invalid);
+}
+
+TEST(PiezasTest, gameStateGameXWins) {
+    Piezas newGame;
+    newGame.dropPiece(0);  // X
+    newGame.dropPiece(1);  // O
+    newGame.dropPiece(0);  // X
+    newGame.dropPiece(2);  // O
+    newGame.dropPiece(0);  // X
+    newGame.dropPiece(2);  // X
+    newGame.dropPiece(1);  // O
+    newGame.dropPiece(1);  // X
+    newGame.dropPiece(2);  // O
+    newGame.dropPiece(2);  // X
+    newGame.dropPiece(3);  // O
+    newGame.dropPiece(3);  // X
+    newGame.dropPiece(3);  // O
+    ASSERT_EQ(newGame.gameState(), Invalid);
+}
