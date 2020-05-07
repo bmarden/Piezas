@@ -84,5 +84,63 @@ Piece Piezas::pieceAt(int row, int column) {
  * line, it is a tie.
 **/
 Piece Piezas::gameState() {
+    // Check for incomplete game
+    for (auto row = board.begin(); row != board.end(); row++) {
+        for (auto col = row->begin(); col != row->end(); col++) {
+            if (*col == Blank) {
+                return Invalid;
+            }
+        }
+    }
+
+    // Check for winner
+
+    int greatestX = 1;
+    int greatestO = 1;
+
+    for (size_t i = 0; i < board.size(); i++) {
+        int curXMax = 1;
+        int curOMax = 1;
+        Piece tmp = board[i][0];
+        for (size_t j = 1; j < board[i].size(); j++) {
+            if (board[i][j] == tmp) {
+                tmp == X ? curXMax++ : curOMax++;
+            }
+            tmp = board[i][j];
+        }
+        if (curXMax > greatestX) {
+            greatestX = curXMax;
+        }
+        if (curOMax > greatestO) {
+            greatestO = curOMax;
+        }
+    }
+    // If either value has greater than 3 points then they win
+
+    for (size_t j = 0; j < 4; j++) {
+        int curXMax = 1;
+        int curOMax = 1;
+        Piece tmp = board[0][j];
+        for (size_t i = 1; i < 3; i++) {
+            if (tmp == board[i][j]) {
+                board[i][j] == X ? curXMax++ : curOMax++;
+            }
+            tmp = board[i][j];
+        }
+        if (curXMax > greatestX) {
+            greatestX = curXMax;
+        }
+        if (curOMax > greatestO) {
+            greatestO = curOMax;
+        }
+    }
+
+    if (greatestX > greatestO) {
+        return X;
+    }
+    if (greatestO > greatestX) {
+        return O;
+    }
+
     return Blank;
 }
