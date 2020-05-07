@@ -64,31 +64,30 @@ TEST(PiezasTest, dropPieceExpectO) {
     EXPECT_EQ(p.dropPiece(0), O);
 }
 
-TEST(PiezasTest, dropPieceExpectX) {
+TEST(PiezasTest, dropPieceExpectX2ndTurn) {
     Piezas p;
     p.dropPiece(1);
     EXPECT_EQ(p.dropPiece(2), X);
 }
 
-TEST(PiezasTest, dropPieceExpectO1) {
+TEST(PiezasTest, dropPieceExpectO2ndTurn) {
     Piezas p;
     p.dropPiece(3);
     p.dropPiece(3);
     EXPECT_EQ(p.dropPiece(2), O);
 }
 
-TEST(PiezasTest, dropPieceExpectedTurn) {
-    Piezas p;
-    EXPECT_EQ(p.dropPiece(3), O);
-}
-
 TEST(PiezasTest, dropPieceInvalidColumn) {
     Piezas p;
     ASSERT_EQ(p.dropPiece(4), Invalid);
-    ASSERT_EQ(p.dropPiece(100), Invalid);
 }
 
-TEST(PiezasTest, dropPieceFullColumn) {
+TEST(PiezasTest, dropPieceInvalidColumn2) {
+    Piezas p;
+    ASSERT_EQ(p.dropPiece(-1), Invalid);
+}
+
+TEST(PiezasTest, dropPieceFullColumn0) {
     Piezas p;
     p.dropPiece(0);
     p.dropPiece(0);
@@ -112,12 +111,19 @@ TEST(PiezasTest, dropPieceFullCol2) {
     ASSERT_EQ(p.dropPiece(2), Blank);
 }
 
+TEST(PiezasTest, dropPieceFullCol3) {
+    Piezas p;
+    p.dropPiece(3);
+    p.dropPiece(3);
+    p.dropPiece(3);
+    ASSERT_EQ(p.dropPiece(3), Blank);
+}
 TEST(PiezasTest, dropPieceColValues) {
     Piezas p;
     p.dropPiece(0);
     p.dropPiece(0);
     p.dropPiece(0);
-    EXPECT_EQ((char)p.pieceAt(0, 0), (char)X);
+    EXPECT_EQ(p.pieceAt(0, 0), X);
     EXPECT_EQ(p.pieceAt(1, 0), O);
     EXPECT_EQ(p.pieceAt(2, 0), X);
 }
@@ -172,7 +178,7 @@ TEST(PiezasTest, gameStateXWinsbyRows) {
     p.dropPiece(3);  // O
     p.dropPiece(2);  // X
     p.dropPiece(3);  // O
-    ASSERT_EQ((char)p.gameState(), (char)X);
+    ASSERT_EQ(p.gameState(), X);
 }
 
 TEST(PiezasTest, gameStateOWinsbyRows) {
@@ -198,7 +204,7 @@ TEST(PiezasTest, gameStateOWinsbyRows) {
     p.dropPiece(3);  // X
     p.dropPiece(3);  // O
 
-    ASSERT_EQ((char)p.gameState(), (char)O);
+    ASSERT_EQ(p.gameState(), O);
 }
 
 TEST(PiezasTest, gameStateXWinsbyCols) {
@@ -224,5 +230,31 @@ TEST(PiezasTest, gameStateXWinsbyCols) {
     p.dropPiece(3);  // X
     p.dropPiece(3);  // O
 
-    ASSERT_EQ((char)p.gameState(), (char)X);
+    ASSERT_EQ(p.gameState(), X);
+}
+
+TEST(PiezasTest, gameStateTie) {
+    Piezas p;
+    // Game Board
+    /** 
+     * 0 1 2 3
+     * X O X O
+     * O O X O
+     * X X X O 
+    **/
+
+    p.dropPiece(0);  // X
+    p.dropPiece(0);  // O
+    p.dropPiece(0);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(2);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(1);  // X
+    p.dropPiece(1);  // O
+    p.dropPiece(2);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(2);  // X
+    p.dropPiece(1);  // O
+
+    ASSERT_EQ(p.gameState(), Blank);
 }
