@@ -258,3 +258,28 @@ TEST(PiezasTest, gameStateTie) {
 
     ASSERT_EQ(p.gameState(), Blank);
 }
+
+TEST(PiezasTest, gameStateIncompleteByOneTurn) {
+    Piezas p;
+    // Game Board
+    /** 
+     * 0 1 2 3
+     * X * X O
+     * O O X O
+     * X X X O 
+    **/
+
+    p.dropPiece(0);  // X
+    p.dropPiece(0);  // O
+    p.dropPiece(0);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(2);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(1);  // X
+    p.dropPiece(1);  // O
+    p.dropPiece(2);  // X
+    p.dropPiece(3);  // O
+    p.dropPiece(2);  // X
+
+    ASSERT_EQ(p.gameState(), Invalid);
+}
